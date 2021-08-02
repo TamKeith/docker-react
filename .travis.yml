@@ -1,0 +1,10 @@
+sudo: required
+services:
+  - docker
+
+# before_install is a series of commands executed b4 we run our tests in this case or deploy our project
+before_install:
+  - docker build -t tamkeithncube/docker-react -f Dockerfile.dev .
+
+script:
+  - docker run -e CI=true tamkeithncube/docker-react npm run test -- --coverage 
