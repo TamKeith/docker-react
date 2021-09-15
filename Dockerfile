@@ -12,5 +12,8 @@ RUN npm run build
 
 
 FROM nginx
+# This is for travis and elasticbeanstalk during deployment, for our local machines this instructions means nothing really but when
+# AWS ElasticBeanStalk sees this instruction it immediately know that is has to map to that port
+EXPOSE 80
 # copy something from the previous stage named builder to the following directory
 COPY --from=builder /app/build /usr/share/nginx/html

@@ -6,5 +6,24 @@ services:
 before_install:
   - docker build -t tamkeithncube/docker-react -f Dockerfile.dev .
 
+# supposed to contain all the different commands needed to actually run our test suite.
+# -- --coverage allows us to exit the test when 'npm run test' has executed since the default behaviour of npm run test runs and sits
+# and hangs waiting for user input. so we need to exit and get back to the command line.
+# Travis.CI only cares about the status code from running the test
 script:
   - docker run -e CI=true tamkeithncube/docker-react npm run test -- --coverage
+
+# deploy:
+#   provider: elasticbeanstalk
+#   region: "us-west-2"
+#   app: "docker-react"
+#   env: "Docker-env"
+#   bucket-name: "elasticbeanstalk-us-west-2-306476627547"
+#   bucket-path: "docker-react"
+#   on: 
+#     branch: master
+# go on and generate a set of API keys on AWS that are going to give Travis access to our AWS account. U
+# use Travis to store the access_key_id and the secret_access_key as environment variable and access them like so:
+#   access_key_id: $AWS_ACCESS_KEY
+#   secret_access_key: 
+#     secure: "$AWS_SECRET_KEY"
